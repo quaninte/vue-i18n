@@ -22,7 +22,14 @@ export default function (Vue) {
       } else {
         setLocale(id, definition, locale => {
           if (locale) {
-            locales[id] = locale
+            // Merge translations
+            let old;
+            if (typeof locales[id] === 'undefined') {
+              old = {}
+            } else {
+              old = locales[id]
+            }
+            locales[id] = Object.assign(locale, old)
           } else {
             warn('failed set `' + id + '` locale')
           }
